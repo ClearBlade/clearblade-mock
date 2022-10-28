@@ -1,0 +1,23 @@
+{
+  "name": "@clearblade/clearblade-mock",
+  "version": "0.0.1",
+  "description": "Utilities for mocking ClearBlade native libraries in unit tests",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ClearBlade/clearblade-mock.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ClearBlade/clearblade-mock/issues"
+  },
+  "homepage": "https://github.com/ClearBlade/clearblade-mock#readme",
+  "dependencies": {
+    "@clearblade/code-service-types": "^3.9.7",
+    "@types/jest": "^29.2.0"
+  }
+}
