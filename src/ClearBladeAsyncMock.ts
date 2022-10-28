@@ -79,8 +79,7 @@ export class ClearBladeAsyncMock {
   Preloader: jest.Mock;
   Timers: jest.Mock;
   constructor(asyncMocks: AsyncMocks = {}) {
-    const getMockOrDefault = (mock?: jest.Mock) =>
-      mock || jest.fn(() => Promise.resolve());
+    const getMockOrDefault = (mock?: jest.Mock) => mock || jest.fn(() => Promise.resolve());
 
     this.mocks = {
       cache: {
@@ -96,18 +95,14 @@ export class ClearBladeAsyncMock {
         fetch: getMockOrDefault(asyncMocks.collection?.fetch),
         create: getMockOrDefault(asyncMocks.collection?.create),
         update: getMockOrDefault(asyncMocks.collection?.update),
-        deleteCollection: getMockOrDefault(
-          asyncMocks.collection?.deleteCollection
-        ),
+        deleteCollection: getMockOrDefault(asyncMocks.collection?.deleteCollection),
         dropColumn: getMockOrDefault(asyncMocks.collection?.dropColumn),
         addColumn: getMockOrDefault(asyncMocks.collection?.addColumn),
         columns: getMockOrDefault(asyncMocks.collection?.columns),
         remove: getMockOrDefault(asyncMocks.collection?.remove),
         count: getMockOrDefault(asyncMocks.collection?.count),
         createIndex: getMockOrDefault(asyncMocks.collection?.createIndex),
-        createUniqueIndex: getMockOrDefault(
-          asyncMocks.collection?.createUniqueIndex
-        ),
+        createUniqueIndex: getMockOrDefault(asyncMocks.collection?.createUniqueIndex),
         upsert: getMockOrDefault(asyncMocks.collection?.upsert),
       },
       fs: {
@@ -133,9 +128,7 @@ export class ClearBladeAsyncMock {
         or: getMockOrDefault(asyncMocks.query?.or),
         equalTo: getMockOrDefault(asyncMocks.query?.equalTo),
         greaterThan: getMockOrDefault(asyncMocks.query?.greaterThan),
-        greaterThanEqualTo: getMockOrDefault(
-          asyncMocks.query?.greaterThanEqualTo
-        ),
+        greaterThanEqualTo: getMockOrDefault(asyncMocks.query?.greaterThanEqualTo),
         lessThan: getMockOrDefault(asyncMocks.query?.lessThan),
         lessThanEqualTo: getMockOrDefault(asyncMocks.query?.lessThanEqualTo),
         notEqualTo: getMockOrDefault(asyncMocks.query?.notEqualTo),
@@ -146,8 +139,7 @@ export class ClearBladeAsyncMock {
         descending: getMockOrDefault(asyncMocks.query?.descending),
         rawQuery: getMockOrDefault(asyncMocks.query?.rawQuery),
       },
-      newCollection:
-        asyncMocks.newCollection || jest.fn(() => Promise.resolve()),
+      newCollection: asyncMocks.newCollection || jest.fn(() => Promise.resolve()),
       lock: {
         lock: getMockOrDefault(asyncMocks.lock?.lock),
         unlock: getMockOrDefault(asyncMocks.lock?.unlock),
@@ -157,9 +149,7 @@ export class ClearBladeAsyncMock {
       database: {
         query: getMockOrDefault(asyncMocks.database?.query),
         exec: getMockOrDefault(asyncMocks.database?.exec),
-        performOperation: getMockOrDefault(
-          asyncMocks.database?.performOperation
-        ),
+        performOperation: getMockOrDefault(asyncMocks.database?.performOperation),
       },
       users: {
         read: getMockOrDefault(asyncMocks.users?.read),
