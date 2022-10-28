@@ -26,9 +26,16 @@ describe('ClearBladeAsyncMock', () => {
     });
     const resp = await test(mock);
     function test(client: CbServer.ClearBladeAsync) {
-      return client.Collection('test').fetch(client.Query().equalTo('name', 'ClearBlade'));
+      return client
+        .Collection<{ name: string }>('test')
+        .fetch(client.Query().equalTo('name', 'ClearBlade'))
+        .then((data) =>
+          data.DATA.map((row) => ({
+            name: `${row.name} bar`,
+          })),
+        );
     }
 
-    expect(resp).toEqual({ DATA: [{ name: 'foo' }] });
+    expect(resp).toEqual([{ name: 'foo bar' }]);
   });
 });
