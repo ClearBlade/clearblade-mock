@@ -62,6 +62,13 @@ interface AsyncMocks {
   preloader?: MapMocks<Partial<CbServer.PreloaderAsync>>;
   triggers?: MapMocks<Partial<CbServer.TriggersAsync>>;
   timers?: MapMocks<Partial<CbServer.TimersAsync>>;
+  role?: MapMocks<Partial<CbServer.RoleAsync>>;
+  customSync?: MapMocks<Partial<CbServer.CustomSyncAsync>>;
+  secret?: MapMocks<Partial<CbServer.SecretAsync>>;
+  auth?: MapMocks<Partial<CbServer.AuthAsync>>;
+  googleCloudLogger?: MapMocks<Partial<CbServer.GoogleCloudLoggerAsync>>;
+  edges?: MapMocks<Partial<CbServer.EdgesAsync>>;
+  devices?: MapMocks<Partial<CbServer.DevicesAsync>>;
 }
 export class ClearBladeAsyncMock {
   mocks: Required<AsyncMocks>;
@@ -78,6 +85,13 @@ export class ClearBladeAsyncMock {
   Triggers: jest.Mock;
   Preloader: jest.Mock;
   Timers: jest.Mock;
+  Role: jest.Mock;
+  CustomSync: jest.Mock;
+  Secret: jest.Mock;
+  Edges: jest.Mock;
+  Auth: jest.Mock;
+  Devices: jest.Mock;
+  GoogleCloudLogger: jest.Mock;
   constructor(asyncMocks: AsyncMocks = {}) {
     const getMockOrDefault = (mock?: jest.Mock) => mock || jest.fn(() => Promise.resolve());
 
@@ -173,6 +187,48 @@ export class ClearBladeAsyncMock {
         update: getMockOrDefault(asyncMocks.timers?.update),
         delete: getMockOrDefault(asyncMocks.timers?.delete),
       },
+      role: {
+        applyTo: getMockOrDefault(asyncMocks.role?.applyTo),
+        setPermissions: getMockOrDefault(asyncMocks.role?.setPermissions),
+      },
+      customSync: {
+        AllEdges: getMockOrDefault(asyncMocks.customSync?.AllEdges),
+        Platform: getMockOrDefault(asyncMocks.customSync?.Platform),
+        Now: getMockOrDefault(asyncMocks.customSync?.Now),
+        sync: getMockOrDefault(asyncMocks.customSync?.sync),
+      },
+      secret: {
+        create: getMockOrDefault(asyncMocks.secret?.create),
+        delete: getMockOrDefault(asyncMocks.secret?.delete),
+        deleteWithQuery: getMockOrDefault(asyncMocks.secret?.deleteWithQuery),
+        read: getMockOrDefault(asyncMocks.secret?.read),
+        update: getMockOrDefault(asyncMocks.secret?.update),
+        readWithQuery: getMockOrDefault(asyncMocks.secret?.readWithQuery),
+      },
+      auth: {
+        authAnon: getMockOrDefault(asyncMocks.auth?.authAnon),
+        authDevice: getMockOrDefault(asyncMocks.auth?.authDevice),
+        authUser: getMockOrDefault(asyncMocks.auth?.authUser),
+        impersonateUser: getMockOrDefault(asyncMocks.auth?.impersonateUser),
+        reauth: getMockOrDefault(asyncMocks.auth?.reauth),
+        userIDFromToken: getMockOrDefault(asyncMocks.auth?.userIDFromToken),
+      },
+      devices: {
+        create: getMockOrDefault(asyncMocks.devices?.create),
+        delete: getMockOrDefault(asyncMocks.devices?.delete),
+        read: getMockOrDefault(asyncMocks.devices?.read),
+        update: getMockOrDefault(asyncMocks.devices?.update),
+      },
+      edges: {
+        create: getMockOrDefault(asyncMocks.edges?.create),
+        delete: getMockOrDefault(asyncMocks.edges?.delete),
+        read: getMockOrDefault(asyncMocks.edges?.read),
+        update: getMockOrDefault(asyncMocks.edges?.update),
+      },
+      googleCloudLogger: {
+        adminAuditLog: getMockOrDefault(asyncMocks.googleCloudLogger?.adminAuditLog),
+        deviceEventLog: getMockOrDefault(asyncMocks.googleCloudLogger?.deviceEventLog),
+      },
     };
 
     this.Cache = jest.fn(() => this.mocks.cache);
@@ -190,5 +246,12 @@ export class ClearBladeAsyncMock {
     this.Triggers = jest.fn(() => this.mocks.triggers);
     this.Preloader = jest.fn(() => this.mocks.preloader);
     this.Timers = jest.fn(() => this.mocks.timers);
+    this.Role = jest.fn(() => this.mocks.role);
+    this.CustomSync = jest.fn(() => this.mocks.customSync);
+    this.Secret = jest.fn(() => this.mocks.secret);
+    this.Auth = jest.fn(() => this.mocks.auth);
+    this.GoogleCloudLogger = jest.fn(() => this.mocks.googleCloudLogger);
+    this.Edges = jest.fn(() => this.mocks.edges);
+    this.Devices = jest.fn(() => this.mocks.devices);
   }
 }
