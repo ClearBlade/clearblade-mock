@@ -1,6 +1,6 @@
 # clearblade-mock
 
-Utility library for mocking ClearBlade native libraries in unit tests
+Utility library for mocking ClearBlade native libraries in Jest unit tests
 
 ## Installation
 

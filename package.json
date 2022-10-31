@@ -1,7 +1,7 @@
 {
   "name": "@clearblade/clearblade-mock",
   "version": "0.0.2",
-  "description": "Utility library for mocking ClearBlade native libraries in unit tests",
+  "description": "Utility library for mocking ClearBlade native libraries in Jest unit tests",
   "main": "lib/index.js",
   "files": [
     "lib/**/*"
