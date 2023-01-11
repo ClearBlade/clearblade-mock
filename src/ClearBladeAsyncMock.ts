@@ -67,6 +67,8 @@ interface AsyncMocks {
   secret?: MapMocks<Partial<CbServer.SecretAsync>>;
   auth?: MapMocks<Partial<CbServer.AuthAsync>>;
   googleCloudLogger?: MapMocks<Partial<CbServer.GoogleCloudLoggerAsync>>;
+  dataUsage?: MapMocks<Partial<CbServer.DataUsageAsync>>;
+  googleCloudMonitoring?: MapMocks<Partial<CbServer.GoogleCloudMonitoringAsync>>;
   edges?: MapMocks<Partial<CbServer.EdgesAsync>>;
   devices?: MapMocks<Partial<CbServer.DevicesAsync>>;
 }
@@ -92,6 +94,8 @@ export class ClearBladeAsyncMock {
   Auth: jest.Mock;
   Devices: jest.Mock;
   GoogleCloudLogger: jest.Mock;
+  DataUsage: jest.Mock;
+  GoogleCloudMonitoring: jest.Mock;
   constructor(asyncMocks: AsyncMocks = {}) {
     const getMockOrDefault = (mock?: jest.Mock) => mock || jest.fn(() => Promise.resolve());
 
@@ -229,6 +233,21 @@ export class ClearBladeAsyncMock {
         adminAuditLog: getMockOrDefault(asyncMocks.googleCloudLogger?.adminAuditLog),
         deviceEventLog: getMockOrDefault(asyncMocks.googleCloudLogger?.deviceEventLog),
       },
+      dataUsage: {
+        reportHTTPDataUsage: getMockOrDefault(asyncMocks.dataUsage?.reportHTTPDataUsage),
+      },
+      googleCloudMonitoring: {
+        reportActiveDevicesMetric: getMockOrDefault(asyncMocks.googleCloudMonitoring?.reportActiveDevicesMetric),
+        reportBillingBytesCountMetric: getMockOrDefault(
+          asyncMocks.googleCloudMonitoring?.reportBillingBytesCountMetric,
+        ),
+        reportErrorCountMetric: getMockOrDefault(asyncMocks.googleCloudMonitoring?.reportErrorCountMetric),
+        reportOperationCountMetric: getMockOrDefault(asyncMocks.googleCloudMonitoring?.reportOperationCountMetric),
+        reportReceivedBytesCountMetric: getMockOrDefault(
+          asyncMocks.googleCloudMonitoring?.reportReceivedBytesCountMetric,
+        ),
+        reportSentBytesCountMetric: getMockOrDefault(asyncMocks.googleCloudMonitoring?.reportSentBytesCountMetric),
+      },
     };
 
     this.Cache = jest.fn(() => this.mocks.cache);
@@ -253,5 +272,7 @@ export class ClearBladeAsyncMock {
     this.GoogleCloudLogger = jest.fn(() => this.mocks.googleCloudLogger);
     this.Edges = jest.fn(() => this.mocks.edges);
     this.Devices = jest.fn(() => this.mocks.devices);
+    this.DataUsage = jest.fn(() => this.mocks.dataUsage);
+    this.GoogleCloudMonitoring = jest.fn(() => this.mocks.googleCloudMonitoring);
   }
 }

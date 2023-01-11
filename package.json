@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/ClearBlade/clearblade-mock#readme",
   "dependencies": {
-    "@clearblade/code-service-types": "^3.9.7",
+    "@clearblade/code-service-types": "^3.10.0",
     "@types/jest": "^29.2.0"
   },
   "devDependencies": {
