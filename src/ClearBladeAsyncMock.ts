@@ -71,7 +71,17 @@ interface AsyncMocks {
   googleCloudMonitoring?: MapMocks<Partial<CbServer.GoogleCloudMonitoringAsync>>;
   edges?: MapMocks<Partial<CbServer.EdgesAsync>>;
   devices?: MapMocks<Partial<CbServer.DevicesAsync>>;
+  messageHistory?: MapMocks<Partial<CbServer.MessageHistoryAsync>>;
+  devicePublicKeys?: MapMocks<Partial<CbServer.DevicePublicKeysAsync>>;
 }
+
+enum Permissions {
+  READ = 1,
+  CREATE = 2,
+  UPDATE = 4,
+  DELETE = 8,
+}
+
 export class ClearBladeAsyncMock {
   mocks: Required<AsyncMocks>;
   Cache: jest.Mock;
@@ -96,6 +106,9 @@ export class ClearBladeAsyncMock {
   GoogleCloudLogger: jest.Mock;
   DataUsage: jest.Mock;
   GoogleCloudMonitoring: jest.Mock;
+  MessageHistory: jest.Mock;
+  Permissions: typeof Permissions;
+  DevicePublicKeys: jest.Mock;
   constructor(asyncMocks: AsyncMocks = {}) {
     const getMockOrDefault = (mock?: jest.Mock) => mock || jest.fn(() => Promise.resolve());
 
@@ -175,6 +188,9 @@ export class ClearBladeAsyncMock {
       roles: {
         read: getMockOrDefault(asyncMocks.roles?.read),
         grantedTo: getMockOrDefault(asyncMocks.roles?.grantedTo),
+        create: getMockOrDefault(asyncMocks.roles?.create),
+        update: getMockOrDefault(asyncMocks.roles?.update),
+        delete: getMockOrDefault(asyncMocks.roles?.delete),
       },
       triggers: {
         create: getMockOrDefault(asyncMocks.triggers?.create),
@@ -248,6 +264,15 @@ export class ClearBladeAsyncMock {
         ),
         reportSentBytesCountMetric: getMockOrDefault(asyncMocks.googleCloudMonitoring?.reportSentBytesCountMetric),
       },
+      messageHistory: {
+        read: getMockOrDefault(asyncMocks.messageHistory?.read),
+      },
+      devicePublicKeys: {
+        read: getMockOrDefault(asyncMocks.devicePublicKeys?.read),
+        create: getMockOrDefault(asyncMocks.devicePublicKeys?.create),
+        delete: getMockOrDefault(asyncMocks.devicePublicKeys?.delete),
+        replace: getMockOrDefault(asyncMocks.devicePublicKeys?.replace),
+      },
     };
 
     this.Cache = jest.fn(() => this.mocks.cache);
@@ -274,5 +299,8 @@ export class ClearBladeAsyncMock {
     this.Devices = jest.fn(() => this.mocks.devices);
     this.DataUsage = jest.fn(() => this.mocks.dataUsage);
     this.GoogleCloudMonitoring = jest.fn(() => this.mocks.googleCloudMonitoring);
+    this.Permissions = Permissions;
+    this.MessageHistory = jest.fn(() => this.mocks.messageHistory);
+    this.DevicePublicKeys = jest.fn(() => this.mocks.devicePublicKeys);
   }
 }
