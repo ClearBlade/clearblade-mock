@@ -112,6 +112,32 @@ export class ClearBladeAsyncMock {
   constructor(asyncMocks: AsyncMocks = {}) {
     const getMockOrDefault = (mock?: jest.Mock) => mock || jest.fn(() => Promise.resolve());
 
+    const getQueryMock = (mock?: jest.Mock) =>
+      jest.fn((...args) => {
+        if (mock) {
+          mock(...args);
+        }
+        return queryMocks;
+      });
+
+    const queryMocks: AsyncMocks['query'] = {
+      query: asyncMocks.query?.query,
+      andFilter: getQueryMock(asyncMocks.query?.andFilter),
+      or: getQueryMock(asyncMocks.query?.or),
+      equalTo: getQueryMock(asyncMocks.query?.equalTo),
+      greaterThan: getQueryMock(asyncMocks.query?.greaterThan),
+      greaterThanEqualTo: getQueryMock(asyncMocks.query?.greaterThanEqualTo),
+      lessThan: getQueryMock(asyncMocks.query?.lessThan),
+      lessThanEqualTo: getQueryMock(asyncMocks.query?.lessThanEqualTo),
+      notEqualTo: getQueryMock(asyncMocks.query?.notEqualTo),
+      matches: getQueryMock(asyncMocks.query?.matches),
+      setPage: getQueryMock(asyncMocks.query?.setPage),
+      columns: getQueryMock(asyncMocks.query?.columns),
+      ascending: getQueryMock(asyncMocks.query?.ascending),
+      descending: getQueryMock(asyncMocks.query?.descending),
+      rawQuery: getQueryMock(asyncMocks.query?.rawQuery),
+    };
+
     this.mocks = {
       cache: {
         get: getMockOrDefault(asyncMocks.cache?.get),
@@ -153,23 +179,7 @@ export class ClearBladeAsyncMock {
         copy: getMockOrDefault(asyncMocks.file?.copy),
         delete: getMockOrDefault(asyncMocks.file?.delete),
       },
-      query: {
-        query: asyncMocks.query?.query,
-        andFilter: getMockOrDefault(asyncMocks.query?.andFilter),
-        or: getMockOrDefault(asyncMocks.query?.or),
-        equalTo: getMockOrDefault(asyncMocks.query?.equalTo),
-        greaterThan: getMockOrDefault(asyncMocks.query?.greaterThan),
-        greaterThanEqualTo: getMockOrDefault(asyncMocks.query?.greaterThanEqualTo),
-        lessThan: getMockOrDefault(asyncMocks.query?.lessThan),
-        lessThanEqualTo: getMockOrDefault(asyncMocks.query?.lessThanEqualTo),
-        notEqualTo: getMockOrDefault(asyncMocks.query?.notEqualTo),
-        matches: getMockOrDefault(asyncMocks.query?.matches),
-        setPage: getMockOrDefault(asyncMocks.query?.setPage),
-        columns: getMockOrDefault(asyncMocks.query?.columns),
-        ascending: getMockOrDefault(asyncMocks.query?.ascending),
-        descending: getMockOrDefault(asyncMocks.query?.descending),
-        rawQuery: getMockOrDefault(asyncMocks.query?.rawQuery),
-      },
+      query: queryMocks,
       newCollection: asyncMocks.newCollection || jest.fn(() => Promise.resolve()),
       lock: {
         lock: getMockOrDefault(asyncMocks.lock?.lock),

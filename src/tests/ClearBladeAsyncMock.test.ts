@@ -38,4 +38,27 @@ describe('ClearBladeAsyncMock', () => {
 
     expect(resp).toEqual([{ name: 'foo bar' }]);
   });
+
+  describe('Query', () => {
+    it('handles a single equalTo', () => {
+      const mock = new ClearBladeAsyncMock();
+      mock.Query().equalTo('foo', 'bar');
+      expect(mock.mocks.query.equalTo).toHaveBeenCalledWith('foo', 'bar');
+    });
+
+    it('handles multiple equalTo', () => {
+      const mock = new ClearBladeAsyncMock();
+      mock.Query().equalTo('foo', 'bar').equalTo('baz', 'foo');
+      expect(mock.mocks.query.equalTo).toHaveBeenNthCalledWith(1, 'foo', 'bar');
+      expect(mock.mocks.query.equalTo).toHaveBeenNthCalledWith(2, 'baz', 'foo');
+    });
+
+    it('accepts a custom mock', () => {
+      const myMock = jest.fn();
+      const mock = new ClearBladeAsyncMock({ query: { equalTo: myMock } });
+      mock.Query().equalTo('foo', 'bar').equalTo('baz', 'foo');
+      expect(myMock).toHaveBeenNthCalledWith(1, 'foo', 'bar');
+      expect(myMock).toHaveBeenNthCalledWith(2, 'baz', 'foo');
+    });
+  });
 });
